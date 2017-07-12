@@ -1,0 +1,63 @@
+{% extends "blog/base.html" %}
+{% load blog_tags%}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+	<div class="title"> {{post.title}}</div>
+	<p class="tags">
+		<a class="tag">标签：</a>
+			{% for tag in post.tags.all %}
+			<a class="two" href="{% url "blog:user_list_by_tag" tag.slug %}">
+			{{ tag.name }}</a>
+				{% if not forloop.last %}, {% endif %}
+			{% endfor %}
+		</p>
+	<div class="post_body">
+	{{ post.body|markdown }}
+	</div>
+	<p class="date">
+		<a class="four" href="">{{ post.author }}</a>发布于 {{ post.publish }}
+		{% if post.author == request.user %}
+		<a href="{% url "blog:post_edit" post.id %}">编辑</a>
+		<a href="{% url "blog:post_delete" post.id %}">删除</a>
+		{% endif %}
+	</p>
+	<p>
+	<a class="two" href="{% url "blog:post_share" post.id %}">分享</a>
+	</p>
+	<h3>相关文章</h3>
+	{% for post in similar_posts %}
+		<p>
+			<a class="one" href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+		</p>
+		{% empty %}
+		没有相关文章
+	{% endfor%}
+	{% with comments.count as total_comments %}
+		<p class="comment_sum">
+			{{ total_comments }}条评论
+		</p>
+	{% endwith %}
+	{% for comment in comments %}
+		<div class="comment">
+			<div class="info">
+				#{{ forloop.counter}}楼、{{ comment.created }}<a class="four" href="">{{ comment.name }}</a>
+			</div>
+			{{ comment.body|linebreaks }}
+		</div>
+		{% empty %}
+			<p>没有任何评论</p>
+	{% endfor %}
+	{% if new_comment %}
+		<div class="comment_noties">
+			已经添加评论。
+		</div>
+	{% else %}
+		<h2>添加评论</h2>
+		<form action="." method="post">
+			{{ comment_form.as_p }}
+			{% csrf_token %}
+			<p><input type="submit" value="提交评论"></p>
+		</form>
+	{% endif %}
+{% endblock %}

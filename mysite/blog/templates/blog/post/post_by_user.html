@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}我的博客{% endblock %}
+
+{% block content %}
+	<h2>发布博客</h2>
+	{% if status %}
+	<p>
+		发布博客成功！<p>返回<p/>
+		<a href="{% url "blog:user_list"%}">
+			个人中心-
+		</a>
+		<a href="{% url "blog:post_list"%}">
+			博客家园
+		</a>
+	</p>
+	{% else %}
+		<form action="." method="post">
+			{% csrf_token %}
+			<p>标题:{{ form.title }}</p>
+			<p>发布时间:{{ form.publish }}</p>
+			<p>正文:{{ form.body }}</p>
+			<p>发布状态:{{ form.status }}</p>
+			<p>标签{{ form.tags }}</p>
+			<input type="submit" value="发布" />
+		</form>	
+	{% endif %}
+{% endblock%}

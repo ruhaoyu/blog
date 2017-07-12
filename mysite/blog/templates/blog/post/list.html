@@ -1,0 +1,34 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}My Blog{% endblock %}
+
+{% block content %}
+	<h1 style="font-weight: bold;">博客家园</h1>
+	{% if tag %}
+			<h2>所有包含"{{ tag.name }}"标签的博客</h2>
+	{% endif %}
+	{% for post in posts%}
+		<div class="panel panel-default">
+			<div class="panel-heading" style="font-size: 25px; font-weight: bold;">
+				<a class="one" href="{{ post.get_absolute_url }}">{{post.title}}</a>
+			</div>
+			<div style="padding: 10px 15px; background-color: #F0F0F0;">
+				<p class="tags">
+					<a class="tag">标签：</a>
+					{% for tag in post.tags.all %}
+					<a class="two" href="{% url "blog:post_list_by_tag" tag.slug %}">
+					{{ tag.name }}</a>
+					{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+				</p>
+				<div class="panel_body" style="font-size: 18px;">
+					{{ post.body|markdown|truncatewords_html:30 }}
+				</div>
+				<p class="date">
+					<a class="four" href="">{{ post.author }}</a> 发布于 {{ post.publish }}
+				</p>
+			</div>
+		</div>	
+	{% endfor %}
+	{% include "pagination.html" with page=posts %}
+{% endblock%}

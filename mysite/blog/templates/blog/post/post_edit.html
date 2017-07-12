@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}edit blog{% endblock %}
+
+
+{% block content %}
+	{% if edit_status %}
+		<h1>保存成功</h1>
+		<p>
+		"{{ post.title }}"已经编辑保存成功
+		</p>
+	{% else %}
+		<h1>编辑:{{ post.title}}</h1>
+		<form action="." method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="保存">
+		</form>
+	{% endif %}
+{% endblock %}
+

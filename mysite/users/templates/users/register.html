@@ -1,0 +1,12 @@
+{% block content %}
+{% if register_stauts %}
+	<p>注册成功</p>
+{% else %}
+	<form method="post" action=".">
+	{{ form.as_p }}
+	{% csrf_token %}
+	<input type="submit" value="注册" />
+	<input type="hidden" value="{% url "blog:user_list" %}" />
+	</form>
+{% endif %}
+{% endblock content %}

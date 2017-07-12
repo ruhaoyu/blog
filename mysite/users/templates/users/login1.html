@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}登录{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+</head>
+<body class="login_bj" >
+
+    {% block content %}
+        <div class="zhuce_body">
+        	<div class="logo"><a href="#"></a></div>
+            <div class="zhuce_kong login_kuang">
+            	<div class="zc">
+                	<div class="bj_bai">
+                    <h3>登录</h3>
+               	  	<form  action="." method="post">
+                        {% csrf_token %}
+                        <p><p style="padding-bottom: 5px;">用户名</p>{{ form.username }}</p>
+                        <p><p style="padding-bottom: 5px;">密码</p>{{ form.password }}</p>
+                        <!-- <input name="" type="text" class="kuang_txt" placeholder="手机号"> -->
+                        <!-- <input name="" type="text" class="kuang_txt" placeholder="密码"> -->
+                        <div>
+                       	<a href="#">忘记密码？</a><input name="" type="checkbox" value="" checked><span>记住我</span>
+                        </div>
+                        <!-- <input name="登录" type="button" class="btn_zhuce" value="登录"> -->
+                        <input type="submit" value="登录" class="btn_zhuce"/>
+                        <input type="hidden" name="next" value="{% url 'blog:user_list' %}" />
+                        {% if form.errors %}
+                            <p>请输入正确用户名和密码！</p>
+                        {% endif %}
+                    </form>
+                    </div>
+                	<div class="bj_right">
+                    	<p>使用以下账号直接登录</p>
+                        <a href="#" class="zhuce_qq">QQ注册</a>
+                        <a href="#" class="zhuce_wb">微博注册</a>
+                        <a href="#" class="zhuce_wx">微信注册</a>
+                        <p>还未注册？<a href="{% url "users:register"%}">立即注册</a></p>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock content %}
+</body>
+</html>
