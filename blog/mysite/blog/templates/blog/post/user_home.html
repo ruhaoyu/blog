@@ -1,0 +1,13 @@
+{% extends "blog/base.html" %}
+{% load blog_tags%}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+	<div>
+		<ul>
+			<li>yonghuming: {{ user_name }}<a href="{% url "users:password_change" %}">xiugaimima</a></li>
+			<li>yifabu: {{ published_blog_sums }}tiaoboke</li>
+			<li>zongboke: {{ total_blog_sums }}tiaoboke</li>
+		</ul>
+	</div>
+{% endblock %}

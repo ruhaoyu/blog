@@ -161,3 +161,14 @@ def post_delete(request, post_id):
 	post = get_object_or_404(Post, id=post_id)
 	post.delete()
 	return HttpResponseRedirect(reverse('blog:user_list'))
+
+
+@login_required
+def user_home(request):
+	user_name = request.user
+	published_blog_sums = Post.published.all().count()
+	total_blog_sums = Post.objects.all().count()
+	return render(request, "blog/post/user_home.html",
+							{'user_name': user_name,
+							'published_blog_sums': published_blog_sums,
+							'total_blog_sums': total_blog_sums})

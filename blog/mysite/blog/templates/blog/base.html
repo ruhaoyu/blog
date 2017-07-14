@@ -32,7 +32,7 @@
 	      	</form>
 		    <ul class="nav navbar-nav navbar-right">
 		    	{% if user.is_authenticated %}
-					<li><a>Hello, {{ user.username }}</a></li>
+					<li><span>Hello, <a href="{% url "blog:user_home" %}">{{ user.username }}</span></a></li>
 		        	<li><a href="{% url "users:logout" %}">退出</a></li>
 		        {% else %}
 			        <li><a href="{% url "users:register" %}">注册</a></li>

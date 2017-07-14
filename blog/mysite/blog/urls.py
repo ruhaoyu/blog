@@ -26,4 +26,5 @@ urlpatterns = [
 	# 发布帖子
 	url(r'^post/$', views.post_by_user, name='post_by_user'),
 	url(r'^(?P<post_id>\d+)/delete/$', views.post_delete, name='post_delete'),
+	url(r'^user_home/$', views.user_home, name='user_home'),
 ]
